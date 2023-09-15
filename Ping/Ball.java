@@ -1,6 +1,5 @@
 import greenfoot.*;
 
-
 /**
  * A Ball is a thing that bounces of walls and paddles (or at least i should).
  * 
@@ -19,6 +18,7 @@ public class Ball extends Actor
     private boolean hasBouncedHorizontally;
     private boolean hasBouncedVertically;
     private int delay;
+    private boolean speedIncreased;
 
     /**
      * Contructs the ball and sets it in motion!
@@ -26,7 +26,7 @@ public class Ball extends Actor
     public Ball()
     {
         createImage();
-        init();
+        initBall();
     }
 
     /**
@@ -54,7 +54,6 @@ public class Ball extends Actor
         {
             move(speed);
             checkBounceOffWalls();
-            checkBounceOffCeiling();
             checkBounceOffPaddle();
             checkBounceOffBotPaddle();
             hitCountChecker(); // Her tjekker vi om hitcount er 10, og hvis den er inkremer speed
@@ -95,6 +94,7 @@ public class Ball extends Actor
     {
         return isTouching(BotPaddle.class);
     }
+    
     /**
      * Check to see if the ball should bounce off one of the walls.
      * If touching one of the walls, the ball is bouncing off.
@@ -113,7 +113,6 @@ public class Ball extends Actor
             hasBouncedHorizontally = false;
         }
     }
-    
     
     private void checkBounceOffBotPaddle()
     {
@@ -146,36 +145,18 @@ public class Ball extends Actor
             hasBouncedVertically = false;
         }
     }
-    
-    /**
-     * Check to see if the ball should bounce off the ceiling.
-     * If touching the ceiling the ball is bouncing off.
-     */
-    private void checkBounceOffCeiling()
-    {
-        if (isTouchingCeiling())
-        {
-            if (! hasBouncedVertically)
-            {
-                revertVertically();
-            }
-        }
-        else
-        {
-            hasBouncedVertically = false;
-        }
-    }
 
     /**
      * Check to see if the ball should be restarted.
      * If touching the floor the ball is restarted in initial position and speed.
      */
-    private void checkRestart()
+    private void checkRestart() // Her har jeg implementeret, at når bolden rører jorden så resetter vi gameLevel
     {
-        if (isTouchingFloor())
-        {
-            init();
-            setLocation(getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+        if (isTouchingFloor()) {
+            restart();
+        }
+        if (isTouchingCeiling()) {
+            restart();
         }
     }
 
@@ -202,7 +183,7 @@ public class Ball extends Actor
     /**
      * Initialize the ball settings.
      */
-    private void init()
+    private void initBall()
     {
         speed = 2;
         delay = DELAY_TIME;
@@ -214,9 +195,20 @@ public class Ball extends Actor
     // Her laver jeg en metode for, hvis bolden er blevet ramt 10 gange, så inkremere vi speed.
     private void hitCountChecker(){
         if (hitCount >= 10){
+            speedIncreased = true;
             speed++;
             hitCount = 0;
-        }
+        } else speedIncreased = false;
     }
     
+    public boolean isSpeedIncreased(){
+        return speedIncreased;
+    }
+    
+    public void restart(){
+        GameLevelDisplay gameLevelDisplay = (GameLevelDisplay) getWorld().getObjects(GameLevelDisplay.class).get(0);
+        gameLevelDisplay.resetGameLevel(); 
+        initBall();
+        setLocation(getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+    }
 }
