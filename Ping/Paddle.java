@@ -33,12 +33,11 @@ public class Paddle extends Actor
     public void act() 
     {
          if(Greenfoot.isKeyDown("right")){
-             move(speed);
+             setLocation(getX() + speed,getY());
          }
          if (Greenfoot.isKeyDown("left")){
-             move(-speed);
+             setLocation(getX() - speed,getY());
          }
-        
         //tryChangeDirection();
         //setLocation(getX() + dx, getY());
     }    
