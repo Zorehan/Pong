@@ -15,6 +15,7 @@ public class Ball extends Actor
     private static final int DELAY_TIME = 100;
 
     private int speed;
+    private int hitCount; // laver en int for hitCount, som skal bruges til at tælle hitCounts.
     private boolean hasBouncedHorizontally;
     private boolean hasBouncedVertically;
     private int delay;
@@ -56,6 +57,7 @@ public class Ball extends Actor
             checkBounceOffCeiling();
             checkBounceOffPaddle();
             checkBounceOffBotPaddle();
+            hitCountChecker(); // Her tjekker vi om hitcount er 10, og hvis den er inkremer speed
             checkRestart();
         }
     }    
@@ -112,19 +114,20 @@ public class Ball extends Actor
         }
     }
     
+    
     private void checkBounceOffBotPaddle()
     {
         if (isTouchingBotPaddle())
         {
-        if(!hasBouncedVertically)
-        {
+            hitCount++; //Hver gang bolden rammer paddle, så inkremere vi hitCount med 1.
+            if(!hasBouncedVertically)
+            {   
             revertVertically();
+            }
         }
-
         else
         {
             hasBouncedVertically = false;
-        }
         }
     }
 
@@ -132,6 +135,7 @@ public class Ball extends Actor
     {
         if (isTouchingPaddle())
         {
+            hitCount++; //Hver gang bolden rammer paddle, så inkremere vi hitCount med 1.
             if (! hasBouncedVertically)
             {
                 revertVertically();
@@ -206,4 +210,13 @@ public class Ball extends Actor
         hasBouncedVertically = false;
         setRotation(Greenfoot.getRandomNumber(STARTING_ANGLE_WIDTH)+STARTING_ANGLE_WIDTH/2);
     }
+    
+    // Her laver jeg en metode for, hvis bolden er blevet ramt 10 gange, så inkremere vi speed.
+    private void hitCountChecker(){
+        if (hitCount >= 10){
+            speed++;
+            hitCount = 0;
+        }
+    }
+    
 }

@@ -39,7 +39,6 @@ public class BotPaddle extends Actor
         // Få forskellen mellen Ball og botPaddle x-værdier
         int dx = ballX - botPaddleX;
         
-        
         // Hvis bolden er til højre for botPaddle, så setLocation til at bevæge mod højre
         if (dx > 0) {
             setLocation(botPaddleX + paddleSpeed, getY());
