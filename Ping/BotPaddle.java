@@ -32,12 +32,10 @@ public class BotPaddle extends Actor
      */
     public void act() 
     {
-        
-        
         //tryChangeDirection();
         //setLocation(getX() + dx, getY());
     }    
-
+    
     /**
      * Will rotate the paddle 180 degrees if the paddle is at worlds edge.
      */
@@ -62,5 +60,4 @@ public class BotPaddle extends Actor
         image.fill();
         setImage(image);
     }
-
 }
