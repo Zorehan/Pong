@@ -3,7 +3,7 @@ import greenfoot.*;
 public class Ball extends Actor
 {
     private static final int BALL_SIZE = 20; // boldens størrelse
-    private static final int DELAY_TIME = 50; // delay for når bolden skal respawn
+    private static final int DELAY_TIME = 100; // delay for når bolden skal respawn
 
     private int speedX = 2; // boldens speed på x-aksen
     private int speedY = 2; // boldens speed på y-aksen
@@ -16,6 +16,7 @@ public class Ball extends Actor
     public Ball()
     {
         // Her kalder vi metoden createImage(), som vi laver længere nede.
+        delay = 50;
         createImage();
     }
 
