@@ -55,6 +55,7 @@ public class Ball extends Actor
             checkBounceOffWalls();
             checkBounceOffCeiling();
             checkBounceOffPaddle();
+            checkBounceOffBotPaddle();
             checkRestart();
         }
     }    
@@ -88,6 +89,10 @@ public class Ball extends Actor
         return isTouching(Paddle.class); 
     }
     
+    private boolean isTouchingBotPaddle()
+    {
+        return isTouching(BotPaddle.class);
+    }
     /**
      * Check to see if the ball should bounce off one of the walls.
      * If touching one of the walls, the ball is bouncing off.
@@ -104,6 +109,22 @@ public class Ball extends Actor
         else
         {
             hasBouncedHorizontally = false;
+        }
+    }
+    
+    private void checkBounceOffBotPaddle()
+    {
+        if (isTouchingBotPaddle())
+        {
+        if(!hasBouncedVertically)
+        {
+            revertVertically();
+        }
+
+        else
+        {
+            hasBouncedVertically = false;
+        }
         }
     }
 
