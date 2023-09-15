@@ -21,7 +21,7 @@ public class BotPaddle extends Actor
     {
         this.width = width;
         this.height = height;
-        speed = 2;
+        speed = 1;
         dx = 1;
         createImage();
     }
