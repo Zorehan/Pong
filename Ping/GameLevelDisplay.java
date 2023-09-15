@@ -5,14 +5,18 @@ public class GameLevelDisplay extends Actor {
     public GameLevelDisplay() {
         updateText(); // Set the initial text
     }
+  
+    private void updateText() { // Update the text to display the game level
+        setImage(new GreenfootImage("Game Level: " + gameLevel, 24, Color.BLACK, Color.WHITE));
+    }
     
     public void act() {
         // Check if the ball's speed has been increased
         Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
-        if (ball.isSpeedIncreased()) {
+        if (ball.hasSpeedIncreased()) {
             // Increase the game level
             gameLevel++;
-            updateText(); // Update the text to display the new game level
+            updateText(); 
         }
     }
     
@@ -21,14 +25,9 @@ public class GameLevelDisplay extends Actor {
         return gameLevel;
     }
     
+    // Method for resetting gameLevel
     public void resetGameLevel(){
         gameLevel = 1;
         updateText();
-    }
-    
-    // Update the text to display the game level
-    private void updateText() {
-        // Set the text to display the game level
-        setImage(new GreenfootImage("Game Level: " + gameLevel, 24, Color.BLACK, Color.WHITE));
     }
 }

@@ -15,10 +15,12 @@ public class Ball extends Actor
 
     private int speed;
     private int hitCount; // laver en int for hitCount, som skal bruges til at tælle hitCounts.
+    private int delay;
+    
     private boolean hasBouncedHorizontally;
     private boolean hasBouncedVertically;
-    private int delay;
-    private boolean speedIncreased;
+    private boolean hasSpeedIncreased;
+
 
     /**
      * Contructs the ball and sets it in motion!
@@ -29,6 +31,25 @@ public class Ball extends Actor
         initBall();
     }
 
+        /**
+     * Initialize the ball settings.
+     */
+    private void initBall()
+    {
+        speed = 2;
+        delay = DELAY_TIME;
+        hasBouncedHorizontally = false;
+        hasBouncedVertically = false;
+        setRotation(Greenfoot.getRandomNumber(STARTING_ANGLE_WIDTH)+STARTING_ANGLE_WIDTH/2);
+    }
+    
+        public void restart(){
+        GameLevelDisplay gameLevelDisplay = (GameLevelDisplay) getWorld().getObjects(GameLevelDisplay.class).get(0);
+        gameLevelDisplay.resetGameLevel(); 
+        initBall();
+        setLocation(getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+    }
+    
     /**
      * Creates and sets an image of a black ball to this actor.
      */
@@ -56,7 +77,7 @@ public class Ball extends Actor
             checkBounceOffWalls();
             checkBounceOffPaddle();
             checkBounceOffBotPaddle();
-            hitCountChecker(); // Her tjekker vi om hitcount er 10, og hvis den er inkremer speed
+            checkHitCount(); // Her tjekker vi om hitcount er 10, og hvis den er inkremer speed
             checkRestart();
         }
     }    
@@ -179,36 +200,17 @@ public class Ball extends Actor
         setRotation((360 - getRotation()+ randomness + 360) % 360);
         hasBouncedVertically = true;
     }
-
-    /**
-     * Initialize the ball settings.
-     */
-    private void initBall()
-    {
-        speed = 2;
-        delay = DELAY_TIME;
-        hasBouncedHorizontally = false;
-        hasBouncedVertically = false;
-        setRotation(Greenfoot.getRandomNumber(STARTING_ANGLE_WIDTH)+STARTING_ANGLE_WIDTH/2);
-    }
     
     // Her laver jeg en metode for, hvis bolden er blevet ramt 10 gange, så inkremere vi speed.
-    private void hitCountChecker(){
+    private void checkHitCount(){
         if (hitCount >= 10){
-            speedIncreased = true;
+            hasSpeedIncreased = true;
             speed++;
             hitCount = 0;
-        } else speedIncreased = false;
+        } else hasSpeedIncreased = false;
     }
     
-    public boolean isSpeedIncreased(){
-        return speedIncreased;
-    }
-    
-    public void restart(){
-        GameLevelDisplay gameLevelDisplay = (GameLevelDisplay) getWorld().getObjects(GameLevelDisplay.class).get(0);
-        gameLevelDisplay.resetGameLevel(); 
-        initBall();
-        setLocation(getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+    public boolean hasSpeedIncreased(){
+        return hasSpeedIncreased;
     }
 }

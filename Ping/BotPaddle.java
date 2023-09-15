@@ -23,6 +23,17 @@ public class BotPaddle extends Actor
         createImage();
     }
 
+        /**
+     * Creates and sets an image for the paddle, the image will have the same dimensions as the paddles width and height.
+     */
+    private void createImage()
+    {
+        GreenfootImage image = new GreenfootImage(paddleWidth, paddleHeight);
+        image.setColor(Color.BLACK);
+        image.fill();
+        setImage(image);
+    }
+    
     /**
      * Act - do whatever the Paddle wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -47,16 +58,5 @@ public class BotPaddle extends Actor
         else if (dx < 0) {
             setLocation(botPaddleX - paddleSpeed, getY());
         }
-    }
-
-    /**
-     * Creates and sets an image for the paddle, the image will have the same dimensions as the paddles width and height.
-     */
-    private void createImage()
-    {
-        GreenfootImage image = new GreenfootImage(paddleWidth, paddleHeight);
-        image.setColor(Color.BLACK);
-        image.fill();
-        setImage(image);
     }
 }

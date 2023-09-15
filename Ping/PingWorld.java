@@ -1,6 +1,5 @@
 import greenfoot.*;
 
-
 /**
  * The Ping World is where Balls and Paddles meet to play pong.
  * 
@@ -33,5 +32,4 @@ public class PingWorld extends World
             Greenfoot.setWorld(new IntroWorld());
         }
     }
-
 }
