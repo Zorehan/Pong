@@ -143,7 +143,6 @@ public class Ball extends Actor
         }
     }
     
-    
     /**
      * Check to see if the ball should bounce off the ceiling.
      * If touching the ceiling the ball is bouncing off.
