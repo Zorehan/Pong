@@ -42,7 +42,7 @@ public class Ball extends Actor
             moveBall(); // Dette sørger for at bolden bevæger sig
             checkWorldCollision(); // Dette tjekker om bolden kollidere med væggene
             checkPaddleCollision(); // Dette tjekker om bolden kollidere med paddle
-            checkHitCount(5); // Dette tjekker hvor mange gange bolden skal rammes, før bolden bliver hurtigere.
+            checkHitCount(); // Dette tjekker hvor mange gange bolden skal rammes, før bolden bliver hurtigere.
         }
     }  
     
@@ -96,8 +96,8 @@ public class Ball extends Actor
     }
     
     // Her laver jeg en metode for, hvis bolden er blevet ramt 10 gange, så inkremere vi speed.
-    private void checkHitCount(int hitCount){
-        if (hitCount >= hitCount){ // Hvis hitcount >= 10, så gør vi følgende
+    private void checkHitCount(){
+        if (hitCount >= 10){ // Hvis hitcount >= 10, så gør vi følgende
             speedX++; // Inkrementere speedX  med 1. Dette gør bolden hurtigere på x-aksen.
             speedY++; // Inkrementere speedX  med 1. Dette gør bolden hurtigere på y-aksen.
             hasSpeedIncreased = true; // Sætter hasSpeedIncreased til true. Dette bliver brugt inde i GameLevelDisplay
