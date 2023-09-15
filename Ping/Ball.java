@@ -140,6 +140,7 @@ public class Ball extends Actor
         if (isTouchingBotPaddle())
         {
             hitCount++; //Hver gang bolden rammer paddle, så inkremere vi hitCount med 1.
+            Greenfoot.playSound("ball.mp3");
             if(!hasBouncedVertically)
             {   
             revertVertically();
@@ -156,6 +157,7 @@ public class Ball extends Actor
         if (isTouchingPaddle())
         {
             hitCount++; //Hver gang bolden rammer paddle, så inkremere vi hitCount med 1.
+            Greenfoot.playSound("ball.mp3");
             if (! hasBouncedVertically)
             {
                 revertVertically();
