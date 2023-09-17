@@ -90,7 +90,7 @@ public class Ball extends Actor
                 Greenfoot.playSound("ball.mp3");
                 isCollidingWithPaddle = true; // Set the collision flag to true
             }
-            } else {
+        } else {
             // Check if the ball has moved away from the paddle's intersection area
             Actor Paddle = getOneIntersectingObject(Paddle.class);
             Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
