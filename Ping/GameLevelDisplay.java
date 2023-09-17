@@ -24,11 +24,6 @@ public class GameLevelDisplay extends Actor {
         }
     }
     
-    // Getter metoden for gameLevel
-    public int getGameLevel() {
-        return gameLevel;
-    }
-    
     // Method for at resette gameLevel. Dette er brugt inde i respawnBall.
     public void resetGameLevel(){
         gameLevel = 1;

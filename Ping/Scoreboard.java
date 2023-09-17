@@ -17,22 +17,14 @@ public class Scoreboard extends Actor {
     // Metoden for act
     public void act() {
         // Tjek hvis boldens speed er blevet større
-        if (getWorld().getObjects(Ball.class).size() > 0) {
-            Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
-            if (ball.getY() <= 5) { 
-                playerScore++;
-                updateText();
-            }
-            if (ball.getY() >= getWorld().getHeight() - 2){
-                botScore++;
-                updateText();
-            }
+        Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
+        if (ball.getY() <= 5) { 
+            playerScore++;
+            updateText();
         }
-    }
-    public int getPlayerScore(){
-        return playerScore;
-    }
-    public int getBotScore(){
-        return botScore;
+        if (ball.getY() >= getWorld().getHeight() - 2){
+            botScore++;
+            updateText();
+        }
     }
 }

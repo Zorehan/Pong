@@ -24,9 +24,7 @@ public class Ball extends Actor
     private void createImage()
     {
         // Her laver vi et nyt billede, som er på størrelse med boldens størrelse.
-        GreenfootImage ballImage = new GreenfootImage(BALL_SIZE,BALL_SIZE); 
-        ballImage.setColor(Color.BLACK); // Her sætter vi billedets farve til sort
-        ballImage.fillOval(0, 0, BALL_SIZE, BALL_SIZE); // Her udfylder vi bolden i 0, 0, som er oppe i venstre hjørne
+        GreenfootImage ballImage = new GreenfootImage("bold.png"); 
         setImage(ballImage); // Her sætter vi det nye billedet til boldens billede
     }
     
@@ -103,7 +101,7 @@ public class Ball extends Actor
             speedY++; // Inkrementere speedX  med 1. Dette gør bolden hurtigere på y-aksen.
             hasSpeedIncreased = true; // Sætter hasSpeedIncreased til true. Dette bliver brugt inde i GameLevelDisplay
             hitCount = 0; // Resetter hitcount til 0
-        } else hasSpeedIncreased = false; // Hvis hitCount >= 10, så er hasSpeedIncreased = false
+        } else hasSpeedIncreased = false; // Hvis hitCount <= 10, så er hasSpeedIncreased = false
     }
     
     // En getter for hasSpeedIncreased. Brugt inde i GameLevelDisplay.
