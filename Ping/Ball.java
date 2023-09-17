@@ -68,6 +68,7 @@ public class Ball extends Actor
         // Først tjekker vi om bolden kollidere med paddle
         Actor Paddle = getOneIntersectingObject(Paddle.class);
         Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
+        Actor RandomBotPaddle = getOneIntersectingObject(RandomBotPaddle.class);
         
         // Hvis paddle ikke er null, betyder det at bolden kollidere med paddle.
         if (Paddle != null) {
@@ -79,6 +80,10 @@ public class Ball extends Actor
         else if (BotPaddle != null) {
             speedY = -speedY; // Her ændrer vi bolden til at gå modsat
             hitCount++; // Her inkrementere vi med 1 på hitcount
+            Greenfoot.playSound("ball.mp3");
+        }
+        else if (RandomBotPaddle != null) {
+            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
             Greenfoot.playSound("ball.mp3");
         }
     }
