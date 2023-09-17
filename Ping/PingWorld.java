@@ -26,7 +26,7 @@ public class PingWorld extends World
             addObject(new Paddle(100,20), WORLD_WIDTH/2, WORLD_HEIGHT - 50);
             addObject(new BotPaddle(100,20),WORLD_WIDTH/2,WORLD_HEIGHT - 650);
             addObject(new GameLevelDisplay(),WORLD_WIDTH - 75,WORLD_HEIGHT - 675);
-            addObject(new Scoreboard(),WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
+            addObject(new Scoreboard(),WORLD_WIDTH - 385, WORLD_HEIGHT - 675);
             addObject(new RandomBotPaddle(100,20),WORLD_WIDTH / 3, WORLD_HEIGHT / 3);
             setPaintOrder(RandomBotPaddle.class, Ball.class, Scoreboard.class, GameLevelDisplay.class);
         }
