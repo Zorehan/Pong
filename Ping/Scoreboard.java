@@ -18,7 +18,7 @@ public class Scoreboard extends Actor {
     public void act() {
         // Tjek hvis boldens speed er blevet større
         Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
-        if (ball.getY() <= 5) { 
+        if (ball.getY() <= 2) { 
             playerScore++;
             updateText();
         }
