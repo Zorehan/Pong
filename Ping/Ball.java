@@ -53,10 +53,11 @@ public class Ball extends Actor
         {
             move(speed);
             checkBounceOffWalls();
-            checkBounceOffCeiling();
+            //checkBounceOffCeiling();
             checkBounceOffPaddle();
             checkBounceOffBotPaddle();
             checkRestart();
+            checkRestartCeiling();
         }
     }    
 
@@ -83,7 +84,8 @@ public class Ball extends Actor
     { 
         return (getY() >= getWorld().getHeight() - BALL_SIZE/2);
     }
-
+    
+ 
     private boolean isTouchingPaddle()
     { 
         return isTouching(Paddle.class); 
@@ -162,7 +164,14 @@ public class Ball extends Actor
             hasBouncedVertically = false;
         }
     }
-
+    private void checkRestartCeiling()
+    {
+        if (isTouchingCeiling())
+        {
+            init();
+            setLocation(getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+        }
+    }
     /**
      * Check to see if the ball should be restarted.
      * If touching the floor the ball is restarted in initial position and speed.
