@@ -1,211 +1,117 @@
 import greenfoot.*;
 
-
-/**
- * A Ball is a thing that bounces of walls and paddles (or at least i should).
- * 
- * @author The teachers 
- * @version 1
- */
 public class Ball extends Actor
 {
-    private static final int BALL_SIZE = 25;
-    private static final int BOUNCE_DEVIANCE_MAX = 5;
-    private static final int STARTING_ANGLE_WIDTH = 90;
-    private static final int DELAY_TIME = 100;
+    private static final int BALL_SIZE = 20; // boldens størrelse
+    private static final int DELAY_TIME = 100; // delay for når bolden skal respawn
 
-    private int speed;
-    private boolean hasBouncedHorizontally;
-    private boolean hasBouncedVertically;
-    private int delay;
+    private int speedX = 2; // boldens speed på x-aksen
+    private int speedY = 2; // boldens speed på y-aksen
+    private int hitCount; // laver en int for hitCount, som skal bruges til at tælle hitCounts.
+    private int delay; // et delay for boldens spawn - så den ikke spawner med det samme.
 
-    /**
-     * Contructs the ball and sets it in motion!
-     */
+    private boolean hasSpeedIncreased; // en boolean der returner om boldens speed er blevet inkremeret. 
+
+    // Constructor for bolden
     public Ball()
     {
+        // Her kalder vi metoden createImage(), som vi laver længere nede.
+        delay = 50;
         createImage();
-        init();
     }
 
-    /**
-     * Creates and sets an image of a black ball to this actor.
-     */
+    // Metode for at lave boldens billede
     private void createImage()
     {
-        GreenfootImage ballImage = new GreenfootImage(BALL_SIZE,BALL_SIZE);
-        ballImage.setColor(Color.BLACK);
-        ballImage.fillOval(0, 0, BALL_SIZE, BALL_SIZE);
-        setImage(ballImage);
+        // Her laver vi et nyt billede, som er på størrelse med boldens størrelse.
+        GreenfootImage ballImage = new GreenfootImage("bold.png"); 
+        setImage(ballImage); // Her sætter vi det nye billedet til boldens billede
     }
-
-    /**
-     * Act - do whatever the Ball wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    
+    // Metode for act
     public void act() 
     {
+        // Først kører act igennem delay, og tæller den ned indtil 0.
         if (delay > 0)
         {
-            delay--;
+            delay--; // dette dekrementere delay med 1 hvert act.
         }
         else
-        {
-            move(speed);
-            checkBounceOffWalls();
-            checkBounceOffCeiling();
-            checkBounceOffPaddle();
-            checkBounceOffBotPaddle();
-            checkRestart();
+        {   
+            moveBall(); // Dette sørger for at bolden bevæger sig
+            checkWorldCollision(); // Dette tjekker om bolden kollidere med væggene
+            checkPaddleCollision(); // Dette tjekker om bolden kollidere med paddle
+            checkHitCount(); // Dette tjekker hvor mange gange bolden skal rammes, før bolden bliver hurtigere.
         }
-    }    
-
-    /**
-     * Returns true if the ball is touching one of the side walls.
-     */
-    private boolean isTouchingSides()
-    {
-        return (getX() <= BALL_SIZE/2 || getX() >= getWorld().getWidth() - BALL_SIZE/2);
-    }
-
-    /**
-     * Returns true if the ball is touching the ceiling.
-     */
-    private boolean isTouchingCeiling()
-    {
-        return (getY() <= BALL_SIZE/2);
-    }
-
-    /**
-     * Returns true if the ball is touching the floor.
-     */
-    private boolean isTouchingFloor()
-    { 
-        return (getY() >= getWorld().getHeight() - BALL_SIZE/2);
-    }
-
-    private boolean isTouchingPaddle()
-    { 
-        return isTouching(Paddle.class); 
+    }  
+    
+    // Metode for boldens bevægelse
+    private void moveBall(){
+        setLocation(getX() + speedX, getY() + speedY); // Sætter boldens lokation til nuværende + speedX og speedY
     }
     
-    private boolean isTouchingBotPaddle()
-    {
-        return isTouching(BotPaddle.class);
-    }
-    /**
-     * Check to see if the ball should bounce off one of the walls.
-     * If touching one of the walls, the ball is bouncing off.
-     */
-    private void checkBounceOffWalls()
-    {
-        if (isTouchingSides())
-        {
-            if (! hasBouncedHorizontally)
-            {
-                revertHorizontally();
-            }
+    // Metode for at tjekke om bolden kollidere med væggene
+    private void checkWorldCollision(){
+        // Tjek hvis bolden rammer toppen eller bunden af verden
+        if (getY() <= 0 || getY() >= getWorld().getHeight() - 1) {
+            respawnBall(); // Dette fjerner bolden, da den ikke må ramme toppen eller bunden
         }
-        else
-        {
-            hasBouncedHorizontally = false;
+        
+        // Tjek hvis bolden rammer venstre/højre side af verden
+        if (getX() <= 0 || getX() >= getWorld().getWidth() - 1) {
+            speedX = -speedX; // Dette gør, at den bevæger sig modsat retning
+            Greenfoot.playSound("ball.mp3");
         }
     }
     
-    private void checkBounceOffBotPaddle()
-    {
-        if (isTouchingBotPaddle())
-        {
-        if(!hasBouncedVertically)
-        {
-            revertVertically();
+    // Metode for at tjekke om bolden kollidere med paddle
+    private void checkPaddleCollision(){
+        // Først tjekker vi om bolden kollidere med paddle
+        Actor Paddle = getOneIntersectingObject(Paddle.class);
+        Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
+        Actor RandomBotPaddle = getOneIntersectingObject(RandomBotPaddle.class);
+        
+        // Hvis paddle ikke er null, betyder det at bolden kollidere med paddle.
+        if (Paddle != null) {
+            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
+            hitCount++; // Her inkrementere vi med 1 på hitcount
+            Greenfoot.playSound("ball.mp3");
         }
-
-        else
-        {
-            hasBouncedVertically = false;
+        // Hvis botpaddle ikke er null, betyder det at bolden kollidere med paddle.
+        else if (BotPaddle != null) {
+            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
+            hitCount++; // Her inkrementere vi med 1 på hitcount
+            Greenfoot.playSound("ball.mp3");
         }
-        }
-    }
-
-    private void checkBounceOffPaddle()
-    {
-        if (isTouchingPaddle())
-        {
-            if (! hasBouncedVertically)
-            {
-                revertVertically();
-            }
-        }
-        else
-        {
-            hasBouncedVertically = false;
+        else if (RandomBotPaddle != null) {
+            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
+            Greenfoot.playSound("ball.mp3");
         }
     }
     
+    private void respawnBall(){
+        // Her kalder vi resetGameLevel inde fra GameLevelDisplay. Dette gør vi så level resetter sammen med bold.
+        GameLevelDisplay level = (GameLevelDisplay) getWorld().getObjects(GameLevelDisplay.class).get(0);
+        level.resetGameLevel();
+        
+        setLocation(getWorld().getWidth() / 2, (getWorld().getHeight() / 2)); // sætter bolden til midten
+        speedX = 2; // resetter boldens speed på x-aksen
+        speedY = 2; // resetter boldens speed på y-aksen 
+        delay = DELAY_TIME; // adder et delay for når bolden skal bevæge sig igen
+    }
     
-    /**
-     * Check to see if the ball should bounce off the ceiling.
-     * If touching the ceiling the ball is bouncing off.
-     */
-    private void checkBounceOffCeiling()
-    {
-        if (isTouchingCeiling())
-        {
-            if (! hasBouncedVertically)
-            {
-                revertVertically();
-            }
-        }
-        else
-        {
-            hasBouncedVertically = false;
-        }
+    // Her laver jeg en metode for, hvis bolden er blevet ramt 10 gange, så inkremere vi speed.
+    private void checkHitCount(){
+        if (hitCount >= 10){ // Hvis hitcount >= 10, så gør vi følgende
+            speedX++; // Inkrementere speedX  med 1. Dette gør bolden hurtigere på x-aksen.
+            speedY++; // Inkrementere speedX  med 1. Dette gør bolden hurtigere på y-aksen.
+            hasSpeedIncreased = true; // Sætter hasSpeedIncreased til true. Dette bliver brugt inde i GameLevelDisplay
+            hitCount = 0; // Resetter hitcount til 0
+        } else hasSpeedIncreased = false; // Hvis hitCount <= 10, så er hasSpeedIncreased = false
     }
-
-    /**
-     * Check to see if the ball should be restarted.
-     * If touching the floor the ball is restarted in initial position and speed.
-     */
-    private void checkRestart()
-    {
-        if (isTouchingFloor())
-        {
-            init();
-            setLocation(getWorld().getWidth() / 2, getWorld().getHeight() / 2);
-        }
+    
+    // En getter for hasSpeedIncreased. Brugt inde i GameLevelDisplay.
+    public boolean hasSpeedIncreased(){ 
+        return hasSpeedIncreased;
     }
-
-    /**
-     * Bounces the ball back from a vertical surface.
-     */
-    private void revertHorizontally()
-    {
-        int randomness = Greenfoot.getRandomNumber(BOUNCE_DEVIANCE_MAX)- BOUNCE_DEVIANCE_MAX / 2;
-        setRotation((180 - getRotation()+ randomness + 360) % 360);
-        hasBouncedHorizontally = true;
-    }
-
-    /**
-     * Bounces the bal back from a horizontal surface.
-     */
-    private void revertVertically()
-    {
-        int randomness = Greenfoot.getRandomNumber(BOUNCE_DEVIANCE_MAX)- BOUNCE_DEVIANCE_MAX / 2;
-        setRotation((360 - getRotation()+ randomness + 360) % 360);
-        hasBouncedVertically = true;
-    }
-
-    /**
-     * Initialize the ball settings.
-     */
-    private void init()
-    {
-        speed = 2;
-        delay = DELAY_TIME;
-        hasBouncedHorizontally = false;
-        hasBouncedVertically = false;
-        setRotation(Greenfoot.getRandomNumber(STARTING_ANGLE_WIDTH)+STARTING_ANGLE_WIDTH/2);
-    }
-
 }
