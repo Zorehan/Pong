@@ -11,6 +11,7 @@ public class Ball extends Actor
     private int delay; // et delay for boldens spawn - så den ikke spawner med det samme.
 
     private boolean hasSpeedIncreased; // en boolean der returner om boldens speed er blevet inkremeret. 
+    private boolean isCollidingWithPaddle = false;
 
     // Constructor for bolden
     public Ball()
@@ -60,32 +61,44 @@ public class Ball extends Actor
         // Tjek hvis bolden rammer venstre/højre side af verden
         if (getX() <= 0 || getX() >= getWorld().getWidth() - 1) {
             speedX = -speedX; // Dette gør, at den bevæger sig modsat retning
-            Greenfoot.playSound("ball.mp3");
         }
     }
     
     // Metode for at tjekke om bolden kollidere med paddle
-    private void checkPaddleCollision(){
-        // Først tjekker vi om bolden kollidere med paddle
-        Actor Paddle = getOneIntersectingObject(Paddle.class);
-        Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
-        Actor RandomBotPaddle = getOneIntersectingObject(RandomBotPaddle.class);
-        
-        // Hvis paddle ikke er null, betyder det at bolden kollidere med paddle.
-        if (Paddle != null) {
-            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
-            hitCount++; // Her inkrementere vi med 1 på hitcount
-            Greenfoot.playSound("ball.mp3");
-        }
-        // Hvis botpaddle ikke er null, betyder det at bolden kollidere med paddle.
-        else if (BotPaddle != null) {
-            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
-            hitCount++; // Her inkrementere vi med 1 på hitcount
-            Greenfoot.playSound("ball.mp3");
-        }
-        else if (RandomBotPaddle != null) {
-            speedY = -speedY; // Her ændrer vi bolden til at gå modsat
-            Greenfoot.playSound("ball.mp3");
+    private void checkPaddleCollision() {
+        if (!isCollidingWithPaddle) { // Only check collision if not already colliding
+            // Først tjekker vi om bolden kollidere med paddle
+            Actor Paddle = getOneIntersectingObject(Paddle.class);
+            Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
+            Actor RandomBotPaddle = getOneIntersectingObject(RandomBotPaddle.class);
+
+            // Hvis paddle ikke er null, betyder det at bolden kollidere med paddle.
+            if (Paddle != null) {
+                speedY = -speedY; // Her ændrer vi bolden til at gå modsat
+                hitCount++; // Her inkrementere vi med 1 på hitcount
+                Greenfoot.playSound("ball.mp3");
+                isCollidingWithPaddle = true; // Set the collision flag to true
+            }
+            // Hvis botpaddle ikke er null, betyder det at bolden kollidere med paddle.
+            else if (BotPaddle != null) {
+                speedY = -speedY; // Her ændrer vi bolden til at gå modsat
+                hitCount++; // Her inkrementere vi med 1 på hitcount
+                Greenfoot.playSound("ball.mp3");
+                isCollidingWithPaddle = true; // Set the collision flag to true
+            } else if (RandomBotPaddle != null) {
+                speedY = -speedY; // Her ændrer vi bolden til at gå modsat
+                Greenfoot.playSound("ball.mp3");
+                isCollidingWithPaddle = true; // Set the collision flag to true
+            }
+            } else {
+            // Check if the ball has moved away from the paddle's intersection area
+            Actor Paddle = getOneIntersectingObject(Paddle.class);
+            Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
+            Actor RandomBotPaddle = getOneIntersectingObject(RandomBotPaddle.class);
+    
+            if (Paddle == null && BotPaddle == null && RandomBotPaddle == null) {
+                isCollidingWithPaddle = false; // Reset the collision flag
+            }
         }
     }
     
