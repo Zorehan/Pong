@@ -60,6 +60,7 @@ public class Ball extends Actor
         
         // Tjek hvis bolden rammer venstre/højre side af verden
         if (getX() <= 0 || getX() >= getWorld().getWidth() - 1) {
+            Greenfoot.playSound("ball.mp3");
             speedX = -speedX; // Dette gør, at den bevæger sig modsat retning
         }
     }
