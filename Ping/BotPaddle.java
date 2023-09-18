@@ -1,6 +1,5 @@
 import greenfoot.*;
 
-
 /**
  * A paddle is an object that goes back and forth. Though it would be nice if balls would bounce of it.
  * 
@@ -9,55 +8,53 @@ import greenfoot.*;
  */
 public class BotPaddle extends Actor
 {
-    private int width;
-    private int height;
-    private int dx;
-    private int speed;
+    private int paddleWidth;
+    private int paddleHeight;
+    private int paddleSpeed;
 
     /**
      * Constructs a new paddle with the given dimensions.
      */
     public BotPaddle(int width, int height)
     {
-        this.width = width;
-        this.height = height;
-        speed = 1;
-        dx = 1;
+        this.paddleWidth = width;
+        this.paddleHeight = height;
+        paddleSpeed = 2;
         createImage();
     }
 
+        /**
+     * Creates and sets an image for the paddle, the image will have the same dimensions as the paddles width and height.
+     */
+    private void createImage()
+    {
+        GreenfootImage image = new GreenfootImage("paddle.png");
+        setImage(image);
+    }
+    
     /**
      * Act - do whatever the Paddle wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        //tryChangeDirection();
-        //setLocation(getX() + dx, getY());
-    }    
-    
-    /**
-     * Will rotate the paddle 180 degrees if the paddle is at worlds edge.
-     */
-    private void tryChangeDirection()
-    {
-        //Check to see if we are touching the outer boundaries of the world:
-        // IF we are touching the right boundary OR we are touching the left boundary:
-        if(getX() + width/2 >= getWorld().getWidth() || getX() - width/2 <= 0)
-        {
-            //Change our 'x' direction to the inverted direction:
-            dx = dx * -1;
+        // Få en reference til ball object inde i BotPaddle
+        Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
+        
+        // Få Ball og botPaddle x-værdier
+        int ballX = ball.getX();
+        int botPaddleX = getX();
+        
+        // Få forskellen mellen Ball og botPaddle x-værdier
+        int dx = ballX - botPaddleX;
+        
+        // Hvis bolden er til højre for botPaddle, så setLocation til at bevæge mod højre
+        if (dx > 0) {
+            setLocation(botPaddleX + paddleSpeed, getY());
         }
-    }
-
-    /**
-     * Creates and sets an image for the paddle, the image will have the same dimensions as the paddles width and height.
-     */
-    private void createImage()
-    {
-        GreenfootImage image = new GreenfootImage(width, height);
-        image.setColor(Color.BLACK);
-        image.fill();
-        setImage(image);
+        // Hvis bolden er til venstre for botPaddle, så setLocation til at bevæge mod højre
+        else if (dx < 0) {
+            setLocation(botPaddleX - paddleSpeed, getY());
+        }
     }
 }
