@@ -4,7 +4,7 @@ public class Scoreboard extends Actor {
     private int playerScore = 0;
     private int botScore = 0; // Game level i starten af spillet
     
-    // Constructor for GameLevelDisplay
+    // Konstruktør for GameLevelDisplay
     public Scoreboard() {
         updateText(); // Her opdatere vi vores tekst
     }

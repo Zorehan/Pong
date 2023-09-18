@@ -28,7 +28,6 @@ public class RandomBotPaddle extends Actor
      */
     public void act() 
     {
-
         outOfMap();
         tryChangeDirection();
         setLocation(getX() + dx, getY());
@@ -39,11 +38,10 @@ public class RandomBotPaddle extends Actor
      */
     private void tryChangeDirection()
     {
-        //Check to see if we are touching the outer boundaries of the world:
-        // IF we are touching the right boundary OR we are touching the left boundary:
+        // Tjekker om vi rør kanten af verden på højre eller venstre side
         if(getX() + width/2 >= getWorld().getWidth() || getX() - width/2 <= 0)
         {
-            //Change our 'x' direction to the inverted direction:
+            // Gør at pagajen går modsat på x-aksen
             dx = dx * -1;
         }
     }
