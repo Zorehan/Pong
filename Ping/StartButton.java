@@ -11,5 +11,8 @@ public class StartButton extends Actor {
         if (Greenfoot.mouseClicked(this)) {
             Greenfoot.setWorld(new PingWorld(true)); // Switch to the game world when the button is clicked
         }
+        else if (Greenfoot.isKeyDown("enter")) {
+            Greenfoot.setWorld(new PingWorld(true)); 
+        }
     }
 }
