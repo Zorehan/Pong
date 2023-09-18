@@ -69,6 +69,7 @@ public class Ball extends Actor
     private void checkPaddleCollision() {
         if (!isCollidingWithPaddle) { // Only check collision if not already colliding
             // Først tjekker vi om bolden kollidere med paddle
+            BotPaddle bot = (BotPaddle) getWorld().getObjects(BotPaddle.class).get(0);
             Actor Paddle = getOneIntersectingObject(Paddle.class);
             Actor BotPaddle = getOneIntersectingObject(BotPaddle.class);
             Actor RandomBotPaddle = getOneIntersectingObject(RandomBotPaddle.class);
@@ -79,16 +80,19 @@ public class Ball extends Actor
                 hitCount++; // Her inkrementere vi med 1 på hitcount
                 Greenfoot.playSound("ball.mp3");
                 isCollidingWithPaddle = true; // Set the collision flag to true
+                bot.paddleReturned(); //Sætter hasReturned til false
             }
             // Hvis botpaddle ikke er null, betyder det at bolden kollidere med paddle.
             else if (BotPaddle != null) {
                 speedY = -speedY; // Her ændrer vi bolden til at gå modsat
                 hitCount++; // Her inkrementere vi med 1 på hitcount
                 Greenfoot.playSound("ball.mp3");
+                bot.botPaddleReturned(); // Sætter hasReturned til true
                 isCollidingWithPaddle = true; // Set the collision flag to true
             } else if (RandomBotPaddle != null) {
                 speedY = -speedY; // Her ændrer vi bolden til at gå modsat
                 Greenfoot.playSound("ball.mp3");
+                bot.paddleReturned(); // Sætter hasReturned til false
                 isCollidingWithPaddle = true; // Set the collision flag to true
             }
         } else {
