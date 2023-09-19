@@ -11,6 +11,7 @@ public class PingWorld extends World
     // PingWorlds dimensioner. Verden er 700 høj, 500 bred
     private static final int WORLD_WIDTH = 500;
     private static final int WORLD_HEIGHT = 700;
+    public static boolean isPizzaTurnedOn = false;
 
     // Konstruktør til PingWorld. Her tilføjer vi alle objekterne, og bestemmer rækkefølge.
     public PingWorld(boolean gameStarted)
@@ -52,7 +53,7 @@ public class PingWorld extends World
     
     public void act()
     {
-    if(Greenfoot.getRandomNumber(3000) < 1)
+    if(Greenfoot.getRandomNumber(2500) < 1 && isPizzaTurnedOn == true)
     {
     randomBoostPizza(1);
     }

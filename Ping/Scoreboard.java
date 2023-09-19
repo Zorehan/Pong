@@ -3,6 +3,7 @@ import greenfoot.*;
 public class Scoreboard extends Actor {
     private int playerScore = 0;
     private int botScore = 0; // Game level i starten af spillet
+    private boolean hasExecutedThisFrame = false;
     
     // Konstruktør for GameLevelDisplay
     public Scoreboard() {
@@ -18,6 +19,17 @@ public class Scoreboard extends Actor {
     public void act() {
         // Tjek hvis boldens speed er blevet større
         Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
+
+        if (ball.getY() <= 2 && !hasExecutedThisFrame) { 
+            playerScore++;
+            updateText();
+            hasExecutedThisFrame = true;
+            hasExecutedThisFrame = false;
+        }
+        if (ball.getY() >= getWorld().getHeight() - 2){
+            botScore++;
+            updateText();
+        }
         if (botScore == 3)
         {
            GameOverWorld gameOverWorld = new GameOverWorld();
@@ -28,13 +40,6 @@ public class Scoreboard extends Actor {
             VictoryWorld victoryWorld = new VictoryWorld();
             Greenfoot.setWorld(victoryWorld);
         }
-        if (ball.getY() <= 2) { 
-            playerScore++;
-            updateText();
-        }
-        if (ball.getY() >= getWorld().getHeight() - 2){
-            botScore++;
-            updateText();
-        }
+        
     }
 }

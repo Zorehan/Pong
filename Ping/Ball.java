@@ -43,8 +43,8 @@ public class Ball extends Actor
             checkWorldCollision(); // Dette tjekker om bolden kollidere med væggene
             checkPaddleCollision(); // Dette tjekker om bolden kollidere med paddle
             checkHitCount(); // Dette tjekker hvor mange gange bolden skal rammes, før bolden bliver hurtigere.
-        }
             getBoostPizza();
+        }
     }  
     
     // Metode for boldens bevægelse
@@ -72,15 +72,15 @@ public class Ball extends Actor
             {
             getWorld().removeObject(pizza);
             gotBoostPizza = true;
-            speedX += 5;
-            speedY += 5;
+            speedX += 3;
+            speedY += 3;
             }
             else if (pizza != null & speedY < 0)
             {
             getWorld().removeObject(pizza);
             gotBoostPizza = true;
-            speedX -= 5;
-            speedY -= 5;
+            speedX -= 3;
+            speedY -= 3;
             }
     }
     // Metode for at tjekke om bolden kollidere med paddle

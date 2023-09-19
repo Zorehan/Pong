@@ -6,6 +6,7 @@ public class IntroWorld extends World {
         super(800, 600, 1); 
         
         // Tilføjer StartButton til introWorld. 
-        addObject(new StartButton(), getWidth() / 2, getHeight() / 2); 
+        addObject(new StartButton(), getWidth() / 2, getHeight() / 2);
+        addObject(new PizzaButton(), getWidth() / 2, 400);
     }
 }
