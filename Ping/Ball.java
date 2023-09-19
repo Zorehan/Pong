@@ -12,6 +12,7 @@ public class Ball extends Actor
 
     private boolean hasSpeedIncreased; // En boolean der returner om boldens speed er blevet inkremeret. Bruges i GameLevelDisplay.
     private boolean isCollidingWithPaddle = false; // En boolean der checker om bolden kollidere med en paddle. Brugt til at løse kollisions-bug
+    private boolean gotBoostPizza = false;
 
     // Konstruktør for bolden
     public Ball()
@@ -43,6 +44,7 @@ public class Ball extends Actor
             checkPaddleCollision(); // Dette tjekker om bolden kollidere med paddle
             checkHitCount(); // Dette tjekker hvor mange gange bolden skal rammes, før bolden bliver hurtigere.
         }
+            getBoostPizza();
     }  
     
     // Metode for boldens bevægelse
@@ -63,7 +65,24 @@ public class Ball extends Actor
             speedX = -speedX; // Dette gør, at den bevæger sig modsat retning
         }
     }
-    
+    public void getBoostPizza()
+    {
+        Actor pizza = getOneObjectAtOffset(0, 0, BoostPizza.class);
+            if (pizza != null & speedY > 0)
+            {
+            getWorld().removeObject(pizza);
+            gotBoostPizza = true;
+            speedX += 5;
+            speedY += 5;
+            }
+            else if (pizza != null & speedY < 0)
+            {
+            getWorld().removeObject(pizza);
+            gotBoostPizza = true;
+            speedX -= 5;
+            speedY -= 5;
+            }
+    }
     // Metode for at tjekke om bolden kollidere med paddle
     private void checkPaddleCollision() {
         if (!isCollidingWithPaddle) { // Tjek for kollision. Hvis den ikke kollidere, gør dette:

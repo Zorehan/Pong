@@ -35,4 +35,26 @@ public class PingWorld extends World
             Greenfoot.setWorld(new IntroWorld());
         }
     }
+    
+    private void randomBoostPizza(int numberToSpawn)
+    {
+    int minY = 200;
+    int maxY = 500 -200;
+    
+    for (int i=0; i<numberToSpawn; i++)
+    {
+    int newX = Greenfoot.getRandomNumber(480)+25;
+    int newY = Greenfoot.getRandomNumber(maxY-minY)+minY;
+    
+    addObject(new BoostPizza(), newX, newY);
+    }
+    }
+    
+    public void act()
+    {
+    if(Greenfoot.getRandomNumber(3000) < 1)
+    {
+    randomBoostPizza(1);
+    }
+}
 }
