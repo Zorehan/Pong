@@ -90,7 +90,7 @@ public class Ball extends Actor
                 isCollidingWithPaddle = true; // Sæt kollision med paddle til true
             }
             // Hvis RandomBotPaddle ikke er null, betyder det at bolden kollidere med RandomBotPaddle.
-             else if (RandomBotPaddle != null) {
+             else if (RandomBotPaddle != null && speedY < 0) {
                 speedY = -speedY; // Her ændrer vi bolden til at gå modsat
                 Greenfoot.playSound("ball.mp3"); // Spil ball.mp3 hvis den rammer en væg
                 bot.paddleReturned(); // Sætter hasReturned til false. Dette gør, at paddle følger efter bolden
