@@ -4,7 +4,7 @@ public class Scoreboard extends Actor {
     private int playerScore = 0;
     private int botScore = 0; // Game level i starten af spillet
     
-    // Constructor for GameLevelDisplay
+    // Konstruktør for GameLevelDisplay
     public Scoreboard() {
         updateText(); // Her opdatere vi vores tekst
     }
@@ -18,6 +18,16 @@ public class Scoreboard extends Actor {
     public void act() {
         // Tjek hvis boldens speed er blevet større
         Ball ball = (Ball) getWorld().getObjects(Ball.class).get(0);
+        if (botScore == 3)
+        {
+           GameOverWorld gameOverWorld = new GameOverWorld();
+           Greenfoot.setWorld(gameOverWorld);
+        }
+        if (playerScore == 3)
+        {
+            VictoryWorld victoryWorld = new VictoryWorld();
+            Greenfoot.setWorld(victoryWorld);
+        }
         if (ball.getY() <= 2) { 
             playerScore++;
             updateText();

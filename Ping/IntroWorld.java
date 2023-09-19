@@ -1,8 +1,11 @@
 import greenfoot.*;
 
 public class IntroWorld extends World {
-    public IntroWorld() {
-        super(800, 600, 1); // Set the world dimensions
-        addObject(new StartButton(), getWidth() / 2, getHeight() / 2); // Add a "Start" button
+    public IntroWorld() { 
+        // Sætter introWorlds dimensioner (højde, længde, og cell size)
+        super(800, 600, 1); 
+        
+        // Tilføjer StartButton til introWorld. 
+        addObject(new StartButton(), getWidth() / 2, getHeight() / 2); 
     }
 }
