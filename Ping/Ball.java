@@ -72,15 +72,15 @@ public class Ball extends Actor
             {
             getWorld().removeObject(pizza);
             gotBoostPizza = true;
-            speedX += 3;
-            speedY += 3;
+            speedX += 1;
+            speedY += 1;
             }
             else if (pizza != null & speedY < 0)
             {
             getWorld().removeObject(pizza);
             gotBoostPizza = true;
-            speedX -= 3;
-            speedY -= 3;
+            speedX -= 1;
+            speedY -= 1;
             }
     }
     // Metode for at tjekke om bolden kollidere med paddle
