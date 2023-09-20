@@ -14,7 +14,6 @@ public class Scoreboard extends Actor {
     private void updateText() { 
         setImage(new GreenfootImage("Player: " + playerScore + " ||" + " Computer: " + botScore, 24, Color.WHITE,null));
     }
-    
     // Metoden for act
     public void act() {
         // Tjek hvis boldens speed er blevet større
@@ -29,6 +28,8 @@ public class Scoreboard extends Actor {
         if (ball.getY() >= getWorld().getHeight() - 2){
             botScore++;
             updateText();
+            hasExecutedThisFrame = true;
+            hasExecutedThisFrame = false;
         }
         if (botScore == 3)
         {

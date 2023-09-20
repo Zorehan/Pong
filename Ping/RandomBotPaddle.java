@@ -72,6 +72,7 @@ public class RandomBotPaddle extends Actor
         if (getX() <= paddleWidth / 2) 
         {
             newX = worldWidth - paddleWidth / 2;
+            
         } else 
         {
             newX = paddleWidth / 2;
