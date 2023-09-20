@@ -17,6 +17,7 @@ public class PizzaButton extends Actor
         if(Greenfoot.mouseClicked(this))
         {
         PingWorld.isPizzaTurnedOn = true;
+        Greenfoot.setWorld(new PingWorld(true));
         }
     }   
 }
