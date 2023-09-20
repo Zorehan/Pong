@@ -27,6 +27,7 @@ public class PingWorld extends World
             addObject(new GameLevelDisplay(),WORLD_WIDTH - 75,WORLD_HEIGHT - 675);
             addObject(new Scoreboard(),WORLD_WIDTH - 385, WORLD_HEIGHT - 675);
             addObject(new RandomBotPaddle(100,20),WORLD_WIDTH / 3, WORLD_HEIGHT / 3);
+            setBackground(new GreenfootImage("baggrund.jpeg"));
             
             // Dette sætter objekterne i rækkefølge af hvad der skal være forrest på skærmen
             setPaintOrder(RandomBotPaddle.class, Ball.class, Scoreboard.class, GameLevelDisplay.class);
@@ -35,6 +36,7 @@ public class PingWorld extends World
         {
             Greenfoot.setWorld(new IntroWorld());
         }
+        
     }
     
     private void randomBoostPizza(int numberToSpawn)
