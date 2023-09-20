@@ -10,7 +10,7 @@ public class GameLevelDisplay extends Actor {
 
     // Metoden for at opdatere teksten. Vi laver et nyt billede, som faktisk er en text.
     private void updateText() { 
-        setImage(new GreenfootImage("Game Level: " + gameLevel, 24, Color.BLACK, Color.WHITE));
+        setImage(new GreenfootImage("Game Level: " + gameLevel, 24, Color.WHITE, null));
     }
     
     // Metoden for act

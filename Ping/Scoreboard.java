@@ -12,7 +12,7 @@ public class Scoreboard extends Actor {
 
     // Metoden for at opdatere teksten. Vi laver et nyt billede, som faktisk er en text.
     private void updateText() { 
-        setImage(new GreenfootImage("Player: " + playerScore + " ||" + " Computer: " + botScore, 24, Color.BLACK, Color.WHITE));
+        setImage(new GreenfootImage("Player: " + playerScore + " ||" + " Computer: " + botScore, 24, Color.WHITE,null));
     }
     
     // Metoden for act
